@@ -2,12 +2,12 @@
 
 @section('content')
     <div class="max-w-7xl mx-auto py-6">
-        <h1 class="text-2xl font-bold mb-6">Daftar Vendor</h1>
+        <h1 class="text-2xl font-bold mb-6">Daftar Partnership</h1>
 
         <div class="mb-4">
-            <a href="{{ route('admin.vendors.create') }}"
+            <a href="{{ route('admin.partnerships.create') }}"
                 class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md shadow">
-                + Tambah Vendor
+                + Tambah Partnership
             </a>
         </div>
 
@@ -22,33 +22,29 @@
                 <thead>
                     <tr class="bg-gray-100 text-left">
                         <th class="px-6 py-3 border-b">ID</th>
-                        <th class="px-6 py-3 border-b">Judul</th>
-                        <th class="px-6 py-3 border-b">Deskripsi</th>
-                        <th class="px-6 py-3 border-b">Website</th>
-                        <th class="px-6 py-3 border-b">Logo</th>
+                        <th class="px-6 py-3 border-b">Title</th>
+                        <th class="px-6 py-3 border-b">URL Partner</th>
                         <th class="px-6 py-3 border-b">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse ($vendors as $vendor)
+                    @forelse ($partnerships as $partnership)
                         <tr class="hover:bg-gray-50">
-                            <td class="px-6 py-3 border-b">{{ $vendor->id }}</td>
-                            <td class="px-6 py-3 border-b">{{ $vendor->title }}</td>
-                            <td class="px-6 py-3 border-b">{{ \Illuminate\Support\Str::limit($vendor->description, 50) }}
-                            </td>
+                            <td class="px-6 py-3 border-b">{{ $partnership->id }}</td>
+                            <td class="px-6 py-3 border-b">{{ $partnership->title }}</td>
                             <td class="px-6 py-3 border-b">
-                                {{ $vendor->visit_website_url }}
-                            </td>
-                            <td class="px-6 py-3 border-b">
-                                <img src="{{ $vendor->imageLink?->url }}" alt="{{ $vendor->title }}"
-                                    class="h-10 w-10 object-cover">
+                                <a href="{{ $partnership->partner_url }}" target="_blank"
+                                    class="text-blue-600 hover:underline">
+                                    {{ $partnership->partner_url }}
+                                </a>
                             </td>
                             <td class="px-6 py-3 border-b">
                                 <div class="flex gap-2">
-                                    <a href="{{ route('admin.vendors.edit', $vendor->id) }}"
+                                    <a href="{{ route('admin.partnerships.edit', $partnership->id) }}"
                                         class="px-3 py-1 text-sm bg-blue-600 hover:bg-blue-700 text-white rounded">Edit</a>
-                                    <form action="{{ route('admin.vendors.destroy', $vendor->id) }}" method="POST"
-                                        onsubmit="return confirm('Yakin ingin menghapus vendor ini?');">
+
+                                    <form action="{{ route('admin.partnerships.destroy', $partnership->id) }}"
+                                        method="POST" onsubmit="return confirm('Yakin ingin menghapus partnership ini?');">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit"
@@ -61,7 +57,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="6" class="px-6 py-3 text-center text-gray-500">Belum ada vendor.</td>
+                            <td colspan="4" class="px-6 py-3 text-center text-gray-500">Belum ada partnership.</td>
                         </tr>
                     @endforelse
                 </tbody>
@@ -69,7 +65,7 @@
         </div>
 
         <div class="mt-4">
-            {{ $vendors->links() }}
+            {{ $partnerships->links() }}
         </div>
     </div>
 @endsection
